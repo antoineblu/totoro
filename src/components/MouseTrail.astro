@@ -1,0 +1,94 @@
+---
+import Particles from "astro-particles"
+
+// images mouse trail
+const options = {
+  particles: {
+    number: {
+      value: 0
+    },
+    shape: {
+        type: "image",
+        image: {
+            src: "/dust_bunny_1.png",
+            width: 100,
+            height: 100
+        }
+    },
+    opacity: {
+      value: 1
+    },
+    rotate: {
+      value: { min: 0, max: 360 },
+      direction: "random",
+      animation: {
+        enable: true,
+        sync: true,
+        speed: { min: 15, max: 30 }
+      }
+    },
+    size: {
+      value: { min: 10, max: 13 }
+    },
+    move: {
+      enable: true,
+      speed: { min: 1.5, max: 2.5 },
+    },
+    opacity: {
+      value: 1,
+      anim: {
+        enable: true,
+        speed: 3,
+        opacity_min: 0,
+        sync: true,
+        startValue: "max",
+        destroy: "min"
+      }
+    }
+  },
+  interactivity: {
+    events: {
+      onHover: {
+        enable: true,
+        mode: "trail"
+      }
+    },
+    modes: {
+      trail: {
+        delay: 0.1,
+        quantity: 2,
+        pauseOnStop: true
+      }
+    }
+  },
+};
+---
+
+<script>
+    import { type Container, type Engine, tsParticles } from "tsparticles-engine";
+    import { loadFull } from "tsparticles";
+
+
+    // the function name is the parameter passed to the init attribute
+    // required
+    // add the function to window is mandatory, it will be searched there
+    window.particlesInit = async function (engine: Engine) {
+        await loadFull(engine);
+    }
+    
+    // the function name is the parameter passed to the loaded attribute
+    // optional
+    // add the function to window is mandatory, it will be searched there
+    window.particlesLoaded = function (container: Container) {
+        console.log("particlesLoaded callback");
+    }
+</script>
+
+<Particles id="tsparticles" options={options} init="particlesInit"  />
+
+<style is:global>
+    #tsparticles {
+        position: fixed;
+        z-index: -1;
+    }
+</style>

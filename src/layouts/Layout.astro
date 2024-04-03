@@ -1,9 +1,32 @@
 ---
+import type { TransitionAnimationPair } from "astro";
+import { ViewTransitions } from "astro:transitions";
+import MouseTrail from "../components/MouseTrail.astro";
+
 interface Props {
 	title: string;
 }
 
 const { title } = Astro.props;
+
+const anim: TransitionAnimationPair = {
+	old: {
+    name: 'fadeIn',
+    duration: '0.5s',
+    easing: 'linear',
+    fillMode: 'forwards',
+  },
+  new: {
+    name: 'fadeIn',
+    duration: '0.3s',
+    easing: 'linear',
+    fillMode: 'backwards',
+  }
+}
+const myFade = {
+  forwards: anim,
+  backwards: anim,
+};
 ---
 
 <!doctype html>
@@ -15,37 +38,86 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<ViewTransitions />
 	</head>
 	<body>
+		<nav class="navigation">
+			<a transition:animate={myFade} href="/">Home</a>
+			<a href="/about">About</a>
+			<a href="/blog">Blog</a>
+		</nav>
 		<slot />
+		<MouseTrail />
 	</body>
+	<script> import "../scripts/scroll"; </script>
 </html>
+
+<script>
+	const scrollDistance = 32;
+	const nav = document.querySelector(".navigation");
+	let sticked = false;
+	window.addEventListener("scroll", (e: Event) => {
+		if (window.scrollY > scrollDistance && !sticked) {
+			nav?.classList.add("sticked");
+			sticked = true;
+		} else if (window.scrollY <= scrollDistance && sticked) {
+			nav?.classList.remove("sticked");
+			sticked = false;
+		}
+	});
+</script>
+
+<style>
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	@keyframes fadeOut {
+		from { opacity: 1; }
+		to { opacity: 0; }
+	}
+
+	.navigation {
+		font-size: 1.5rem;
+		padding: 2rem 6rem;
+		border-radius: 16rem;
+		background: rgb(95, 95, 95);
+		margin: 2rem auto;
+		display: flex;
+		gap: 6rem;
+		width: min-content;
+		background-image: url("https://i.pinimg.com/originals/d4/19/60/d41960b1a126c1dcf689e3869ed33cc3.jpg");
+		background-size: cover;
+		background-position: 50% 70%;
+		background-blend-mode: overlay;
+		position: sticky;
+		top: 0;
+		transition: 0.5s ease-in-out;
+		transition-property: padding border-radius;
+	}
+	.navigation.sticked {
+		padding: 1rem 3rem;
+		border-radius: 0 0 1.75rem 1.75rem;
+	}
+	.navigation a {
+		color: white;
+		text-decoration: none;
+	}
+</style>
+
 <style is:global>
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+		--pastel-main: #bce9ba;
+		--main-color: #309130;
+	}
+	* {
+		margin: 0;
+		box-sizing: border-box;
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+		background-color: var(--pastel-main);
 	}
 </style>
+

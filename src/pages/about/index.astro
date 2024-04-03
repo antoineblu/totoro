@@ -1,0 +1,13 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const items = new Array(1000).fill(0);
+---
+
+<Layout title="Welcome to Astro.">
+	ok
+	<div class="test" transition:animate="fade">
+		{items.map(() => (
+			<p>about</p>
+		))}
+	</div>
+</Layout>
