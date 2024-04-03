@@ -15,9 +15,6 @@ const options = {
             height: 100
         }
     },
-    opacity: {
-      value: 1
-    },
     rotate: {
       value: { min: 0, max: 360 },
       direction: "random",
@@ -65,13 +62,19 @@ const options = {
 ---
 
 <script>
-    import { type Container, type Engine, tsParticles } from "tsparticles-engine";
+    import { type Container, type Engine } from "tsparticles-engine";
     import { loadFull } from "tsparticles";
 
 
     // the function name is the parameter passed to the init attribute
     // required
     // add the function to window is mandatory, it will be searched there
+    declare global {
+        interface Window {
+            particlesInit: (engine: Engine) => Promise<void>;
+        }
+    }
+
     window.particlesInit = async function (engine: Engine) {
         await loadFull(engine);
     }
@@ -79,7 +82,13 @@ const options = {
     // the function name is the parameter passed to the loaded attribute
     // optional
     // add the function to window is mandatory, it will be searched there
-    window.particlesLoaded = function (container: Container) {
+    declare global {
+        interface Window {
+            particlesLoaded: (container: Container) => void;
+        }
+    }
+
+    window.particlesLoaded = function (_container: Container) {
         console.log("particlesLoaded callback");
     }
 </script>

@@ -56,7 +56,7 @@ const myFade = {
 	const scrollDistance = 32;
 	const nav = document.querySelector(".navigation");
 	let sticked = false;
-	window.addEventListener("scroll", (e: Event) => {
+	window.addEventListener("scroll", (_e: Event) => {
 		if (window.scrollY > scrollDistance && !sticked) {
 			nav?.classList.add("sticked");
 			sticked = true;
