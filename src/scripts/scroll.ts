@@ -13,3 +13,9 @@ gsap.ticker.add((time)=>{
 })
 
 gsap.ticker.lagSmoothing(0);
+
+window.addEventListener('scrollend', (e) => {
+    // prevent other listeners from being called
+    if (lenis.isScrolling)
+        e.stopImmediatePropagation();
+})

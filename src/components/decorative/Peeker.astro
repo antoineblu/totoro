@@ -1,0 +1,54 @@
+<div class="wrapper">
+    <div class="container container-1">
+        <img class="img-1" src="/totoro/images/creature2.png" alt="totoro white creature with a leaf umbrella">
+    </div>
+    <slot />
+    <div class="container container-2">
+        <img class="img-2" src="/totoro/images/creature1.png" alt="totoro white creature with a leaf umbrella">
+    </div>
+</div>
+
+
+<style>
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .container {
+        position: absolute;
+        z-index: -1;
+        bottom: 0;
+    }
+    .container-1 {
+        left: -.35rem;
+        height: 100%;
+    }
+    .container-2 {
+        right: -2rem;
+        height: 70%;
+    }
+
+    .container img {
+        height: 100%;
+        transform-origin: 50% 100%;
+        opacity: 0;
+        transition-duration: 0.3s;
+        transition-property: opacity transform;
+        transition-timing-function: cubic-bezier(.79,1.62,.74,1.07);
+    }
+
+    .wrapper:hover .container img {
+        opacity: 1;
+    }
+
+    .wrapper:hover .img-1 {
+        transform: translateX(-10%) rotate(-20deg);
+    }
+    
+    .wrapper:hover .img-2 {
+        transform: translateX(10%) rotate(20deg);
+    }
+</style>

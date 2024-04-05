@@ -1,0 +1,72 @@
+---
+import Peeker from "./decorative/Peeker.astro";
+---
+
+<nav class="navigation">
+    <Peeker>
+        <a href="/totoro/">Home</a>
+    </Peeker>
+    <Peeker>
+        <a href="/totoro/about">About</a>
+    </Peeker>
+    <Peeker>
+        <a href="/totoro/blog">Blog</a>
+    </Peeker>
+</nav>
+
+<style>
+    .navigation {
+		font-size: 2rem;
+		padding: .5rem 4rem;
+		border-radius: 16rem;
+		background: rgb(70, 70, 70);
+		display: flex;
+		gap: 4rem;
+		width: min-content;
+		background-image: url("https://i.pinimg.com/originals/d4/19/60/d41960b1a126c1dcf689e3869ed33cc3.jpg");
+		background-size: 120%;
+		background-position: 50% 70%;
+		background-blend-mode: overlay;
+		position: fixed;
+		top: 1em;
+		left: 50%;
+		transform: translateX(-50%);
+		transition: 0.4s ease-out;
+		transition-property: font-size top background-size padding;
+	}
+	.navigation:hover {
+		background-color: rgb(60, 60, 60);
+	}
+	.navigation.sticked {
+		font-size: 1.5rem;
+		background-size: 120%;
+		padding: .10rem 4rem;
+		top: .25rem;
+	}
+	.navigation a {
+		color: white;
+		text-decoration: none;
+		padding: 1rem;
+	}
+</style>
+
+<script>
+	const scrollDistance = 32;
+	let nav = document.querySelector(".navigation");
+	let sticked = false;
+	window.addEventListener("scroll", (_e) => {
+		if (window.scrollY > scrollDistance && !sticked) {
+			nav?.classList.add("sticked");
+			sticked = true;
+		} else if (window.scrollY <= scrollDistance && sticked) {
+			nav?.classList.remove("sticked");
+			sticked = false;
+		}
+	});
+	document.addEventListener('astro:page-load', () => {
+		sticked = false;
+		nav = document.querySelector(".navigation");
+		nav?.classList.remove("sticked");
+
+	});
+</script>
