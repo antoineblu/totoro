@@ -18,4 +18,4 @@ window.addEventListener('scrollend', (e) => {
     // prevent other listeners from being called
     if (lenis.isScrolling)
         e.stopImmediatePropagation();
-})
+});

@@ -9,11 +9,14 @@ const options = {
     },
     shape: {
         type: "image",
-        image: {
+        image: [
+          {
             src: "/totoro/images/dust_bunny_1.png",
-            width: 100,
-            height: 100
-        }
+          },
+          {
+            src: "/totoro/images/dust_bunny_2.png",
+          }
+        ]
     },
     rotate: {
       value: { min: 0, max: 360 },
@@ -21,11 +24,12 @@ const options = {
       animation: {
         enable: true,
         sync: true,
+        startValue: 0,
         speed: { min: 15, max: 30 }
       }
     },
     size: {
-      value: { min: 10, max: 13 }
+      value: { min: 10, max: 15 }
     },
     move: {
       enable: true,
@@ -52,8 +56,8 @@ const options = {
     },
     modes: {
       trail: {
-        delay: 0.1,
-        quantity: 2,
+        delay: 0.05,
+        quantity: 1,
         pauseOnStop: true
       }
     }
